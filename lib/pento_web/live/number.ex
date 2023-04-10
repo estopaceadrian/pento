@@ -11,7 +11,6 @@ defmodule Number do
   iex(5)> Enum.reduce(list, total, reducer) |> converter.()
   "6"
 
-  test update
   """
   def new(string), do: Integer.parse(string) |> elem(0)
 
