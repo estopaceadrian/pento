@@ -1,13 +1,25 @@
 defmodule PentoWeb.WrongLive do
   use PentoWeb, :live_view
+  alias Pento.Accounts
 
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
     socket =
       socket
+      |> session(session)
+      |> current_user(session)
       |> assign_default_values()
       |> assign_answer()
 
     {:ok, socket}
+  end
+
+  def session(socket, session) do
+    assign(socket, session_id: session["live_socket_id"])
+  end
+
+  def current_user(socket, session) do
+    user = Accounts.get_user_by_session_token(session["user_token"])
+    assign(socket, current_user: user)
   end
 
   def render(assigns) do
@@ -23,6 +35,10 @@ defmodule PentoWeb.WrongLive do
         </.link>
       <% end %>
     </h2>
+    <pre>
+      <%= @current_user.email %>
+      <%= @session_id %>
+    </pre>
     <button
       class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
       type="button"
