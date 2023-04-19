@@ -12,7 +12,7 @@ defmodule PentoWeb.ErrorHTML do
 
   # The default is to render a plain text page based on
   # the template name. For example, "404.html" becomes
-  # "Not Found".
+  # "Not Fou nd".
   def render(template, _assigns) do
     Phoenix.Controller.status_message_from_template(template)
   end
